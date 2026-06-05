@@ -14,613 +14,762 @@
       --blue: #1d4ed8;
       --navy: #0f172a;
       --white: #ffffff;
-      --light: #f8fafc;
-      --soft: #eef2ff;
-      --border: #cbd5e1;
+      --light: #f6f8fc;
+      --soft: #eef4ff;
+      --border: #d7deea;
       --green: #15803d;
       --orange: #c2410c;
       --gray: #64748b;
+      --shadow: 0 14px 35px rgba(15, 23, 42, 0.10);
+      --radius: 20px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--light);
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(29,78,216,.10), transparent 34%),
+        radial-gradient(circle at top right, rgba(185,28,28,.08), transparent 30%),
+        var(--light);
       color: var(--navy);
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      font-weight: 800;
+      padding: 10px 16px;
+      background: var(--blue);
+      color: white;
+      transition: transform .15s ease, opacity .15s ease, box-shadow .15s ease;
+    }
+
+    button:hover {
+      opacity: .94;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(29, 78, 216, .18);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 13px;
+      margin-top: 6px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(29, 78, 216, .12);
+    }
+
+    textarea { min-height: 90px; resize: vertical; }
+
+    label {
+      font-weight: 800;
+      font-size: 13px;
+      color: #172033;
+    }
+
+    .app-shell {
+      min-height: 100vh;
     }
 
     .topbar {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: white;
-      border-bottom: 4px solid var(--blue);
+      background: rgba(255,255,255,.86);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 22px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 16px;
-      padding: 10px 22px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      justify-content: space-between;
+      gap: 18px;
     }
 
-    .left-nav {
+    .brand-area {
       display: flex;
       align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
+      gap: 16px;
+      min-width: 260px;
     }
 
     .main-logo {
-      height: 70px;
-      max-width: 230px;
+      height: 64px;
+      max-width: 165px;
       object-fit: contain;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      background: var(--navy);
+      color: white;
     }
 
     .dropdown {
       position: relative;
     }
 
-    .dropbtn, button {
-      background: var(--blue);
-      color: white;
-      border: none;
-      padding: 10px 13px;
-      border-radius: 9px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .dropbtn {
-      background: var(--navy);
-    }
-
-    button:hover {
-      opacity: 0.92;
-    }
-
-    .dropdown-content {
+    .dropdown-menu {
       display: none;
       position: absolute;
+      top: 48px;
+      left: 0;
+      min-width: 280px;
       background: white;
-      min-width: 240px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      border-radius: 12px;
-      overflow: hidden;
-      z-index: 1001;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      border-radius: 18px;
+      padding: 10px;
+      z-index: 1002;
     }
 
-    .dropdown-content button {
-      background: white;
-      color: var(--navy);
-      border-radius: 0;
+    .dropdown:hover .dropdown-menu,
+    .dropdown:focus-within .dropdown-menu {
+      display: block;
+    }
+
+    .dropdown-menu button {
       width: 100%;
       text-align: left;
-      padding: 12px;
+      background: transparent;
+      color: var(--navy);
+      box-shadow: none;
+      border-radius: 12px;
+      padding: 11px 12px;
     }
 
-    .dropdown-content button:hover {
-      background: #eff6ff;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
+    .dropdown-menu button:hover {
+      background: var(--soft);
+      transform: none;
+      box-shadow: none;
     }
 
     .top-search {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       align-items: center;
-      flex-wrap: wrap;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 9px;
-      border: 1px solid var(--border);
-      font-size: 15px;
-    }
-
-    textarea {
-      min-height: 90px;
-    }
-
-    .top-search input {
-      width: 260px;
-      margin-top: 0;
+      min-width: 360px;
+      max-width: 540px;
+      width: 42%;
     }
 
     .top-search select {
       width: 155px;
-      margin-top: 0;
+      margin: 0;
     }
 
-    .logo-strip {
-      background: white;
+    .top-search input {
+      margin: 0;
+    }
+
+    .company-strip {
+      max-width: 1200px;
+      margin: 18px auto 0;
+      padding: 0 20px;
       display: flex;
       justify-content: center;
-      align-items: center;
-      gap: 24px;
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
+      gap: 14px;
       flex-wrap: wrap;
     }
 
-    .logo-strip img {
-      max-height: 64px;
-      max-width: 180px;
+    .company-pill {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(12px);
+      border-radius: 999px;
+      padding: 8px 16px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      box-shadow: 0 8px 18px rgba(15,23,42,.06);
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .company-pill img {
+      height: 32px;
+      width: 52px;
       object-fit: contain;
-      background: white;
-      padding: 8px;
-      border-radius: 12px;
-      box-shadow: 0 2px 9px rgba(0,0,0,0.12);
+    }
+
+    .company-pill.active {
+      outline: 3px solid rgba(29,78,216,.20);
+      border-color: var(--blue);
     }
 
     .container {
-      max-width: 1320px;
-      margin: auto;
-      padding: 20px;
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 22px 20px 60px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items: stretch;
     }
 
     .panel {
-      background: white;
+      background: rgba(255,255,255,.92);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
       margin-bottom: 18px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+    }
+
+    .panel h2, .panel h3 {
+      margin-top: 0;
+    }
+
+    .notice {
+      background: linear-gradient(135deg, #eff6ff, #fff);
+      border-left: 5px solid var(--blue);
+      padding: 12px 14px;
+      border-radius: 16px;
+      margin: 12px 0;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 13px;
-    }
-
-    label {
-      font-weight: bold;
-      font-size: 14px;
     }
 
     .stats {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      margin-bottom: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+      gap: 13px;
+      margin: 18px 0;
     }
 
     .stat-card {
-      background: linear-gradient(135deg, #ffffff, #eef2ff);
+      background: white;
       border: 1px solid var(--border);
-      border-left: 6px solid var(--blue);
-      padding: 15px;
-      border-radius: 14px;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 10px 26px rgba(15,23,42,.07);
     }
 
     .stat-card h3 {
       margin: 0;
-      font-size: 26px;
       color: var(--blue);
+      font-size: 30px;
     }
 
     .stat-card p {
-      margin: 5px 0 0;
+      margin: 4px 0 0;
       color: var(--gray);
-      font-weight: bold;
+      font-weight: 800;
+    }
+
+    .location-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .location-buttons button {
+      background: white;
+      color: var(--navy);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    .location-buttons button.active {
+      background: var(--blue);
+      color: white;
+      border-color: var(--blue);
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .danger { background: var(--red); }
+    .green { background: var(--green); }
+    .orange { background: var(--orange); }
+    .gray { background: var(--gray); }
+    .navy { background: var(--navy); }
+
+    .vehicle-list {
+      display: grid;
+      gap: 14px;
     }
 
     .vehicle-card {
       background: white;
       border: 1px solid var(--border);
-      border-left: 7px solid var(--blue);
+      border-radius: var(--radius);
       padding: 16px;
-      border-radius: 14px;
-      margin-bottom: 14px;
+      box-shadow: 0 8px 25px rgba(15,23,42,.07);
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 14px;
+      grid-template-columns: 1fr 122px;
+      gap: 16px;
     }
 
     .vehicle-card h3 {
       margin: 0 0 8px;
-      color: var(--red);
+      color: var(--navy);
     }
 
     .badge {
       display: inline-block;
-      padding: 5px 9px;
+      padding: 5px 10px;
       border-radius: 999px;
-      background: #e0ecff;
+      background: var(--soft);
       color: var(--blue);
       font-size: 12px;
-      font-weight: bold;
+      font-weight: 900;
       margin: 3px;
     }
 
-    .status-active { background: #dcfce7; color: var(--green); }
-    .status-hold { background: #ffedd5; color: var(--orange); }
-    .status-released { background: #f1f5f9; color: var(--gray); }
-    .status-auction { background: #fee2e2; color: var(--red); }
+    .badge.green-text { background: #dcfce7; color: var(--green); }
+    .badge.red-text { background: #fee2e2; color: var(--red); }
+    .badge.orange-text { background: #ffedd5; color: var(--orange); }
+    .badge.gray-text { background: #f1f5f9; color: var(--gray); }
 
     .vehicle-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
-      margin-top: 10px;
-    }
-
-    .danger {
-      background: var(--red);
-    }
-
-    .green {
-      background: var(--green);
-    }
-
-    .orange {
-      background: var(--orange);
-    }
-
-    .gray {
-      background: var(--gray);
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .vehicle-photo {
-      max-width: 130px;
-      max-height: 95px;
-      border-radius: 10px;
-      object-fit: cover;
-      border: 1px solid var(--border);
-      margin: 4px;
+      gap: 8px;
+      margin-top: 12px;
     }
 
     .qr-box {
       text-align: center;
-      min-width: 110px;
     }
 
-    .tabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 16px;
+    .qr-box small {
+      display: block;
+      margin-top: 7px;
+      color: var(--gray);
+      font-weight: 800;
     }
 
-    .tab {
-      background: white;
-      color: var(--blue);
-      border: 2px solid var(--blue);
+    .vehicle-photo {
+      max-width: 120px;
+      max-height: 90px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin: 4px;
     }
 
-    .tab.active {
-      background: var(--blue);
-      color: white;
-    }
+    .hidden { display: none !important; }
 
-    .scanner-wrap {
+    .scanner-layout {
       display: grid;
-      gap: 12px;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
     }
 
     video {
       width: 100%;
-      max-width: 480px;
-      border-radius: 14px;
+      max-width: 460px;
+      border-radius: 18px;
       border: 3px solid var(--blue);
       background: #000;
     }
 
-    .inventory-row {
+    .inventory-step {
+      background: white;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      margin: 8px 0;
-      background: #fff;
+      border-radius: 18px;
+      padding: 14px;
+      margin-bottom: 10px;
     }
 
-    .notice {
-      background: #eff6ff;
-      border-left: 5px solid var(--blue);
-      padding: 12px;
-      border-radius: 10px;
-      margin-bottom: 12px;
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .report-table th, .report-table td {
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      font-size: 14px;
+    }
+
+    .report-table th {
+      background: var(--navy);
+      color: white;
+    }
+
+    .login-note {
+      font-size: 13px;
+      color: var(--gray);
+      margin-top: 6px;
+    }
+
+    .example-qr {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+      border: 1px dashed var(--blue);
+      color: var(--blue);
+      box-shadow: none;
     }
 
     @media print {
-      .topbar, .logo-strip, .no-print, button {
+      .topbar, .company-strip, .no-print, button {
         display: none !important;
       }
-
-      body {
-        background: white;
-      }
-
+      body { background: white; }
       .panel, .vehicle-card {
         box-shadow: none;
-        border: 1px solid #000;
+        border: 1px solid #111;
       }
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: 900px) {
       .topbar {
+        position: static;
         flex-direction: column;
         align-items: stretch;
       }
-
-      .left-nav, .top-search {
+      .brand-area, .nav-actions, .top-search {
         justify-content: center;
+        width: 100%;
+        min-width: 0;
       }
-
-      .top-search input,
-      .top-search select {
+      .top-search {
+        flex-direction: column;
+        max-width: none;
+      }
+      .top-search select, .top-search input {
         width: 100%;
       }
-
-      .vehicle-card {
+      .hero, .scanner-layout, .vehicle-card {
         grid-template-columns: 1fr;
       }
-
-      .main-logo {
-        margin: auto;
-      }
+      .main-logo { margin: auto; }
     }
   </style>
 </head>
 
 <body>
+<div class="app-shell">
 
-<header class="topbar">
-  <div class="left-nav">
-    <img src="valor-fleet-logo.png" alt="Valor Fleet Services" class="main-logo">
+  <header class="topbar">
+    <div class="brand-area">
+      <img src="valor-fleet-logo.png" alt="Valor Fleet Services" class="main-logo">
+      <div class="nav-actions no-print">
+        <div class="dropdown">
+          <button class="nav-btn">Menu ▾</button>
+          <div class="dropdown-menu">
+            <button onclick="showSection('dashboard')">Dashboard</button>
+            <button onclick="showSection('addVehiclePanel')">Add Vehicle</button>
+            <button onclick="showSection('inventoryPanel')">Current Inventory</button>
+            <button onclick="showSection('inventoryModePanel')">Start Inventory</button>
+            <button onclick="showSection('reportsPanel')">Reports</button>
+          </div>
+        </div>
 
-    <div class="dropdown no-print">
-      <button class="dropbtn">Menu ▾</button>
-      <div class="dropdown-content">
-        <button onclick="showSection('dashboard')">Dashboard</button>
-        <button onclick="showSection('addVehiclePanel')">Add Vehicle</button>
-        <button onclick="showSection('inventoryPanel')">Inventory</button>
-        <button onclick="showSection('inventoryCheckPanel')">Start Inventory</button>
-        <button onclick="showSection('reportsPanel')">Reports</button>
+        <div class="dropdown">
+          <button class="nav-btn">Companies ▾</button>
+          <div class="dropdown-menu" id="companyDropdown"></div>
+        </div>
       </div>
     </div>
 
-    <div class="dropdown no-print">
-      <button class="dropbtn">Companies ▾</button>
-      <div class="dropdown-content" id="companyMenu"></div>
+    <div class="top-search no-print">
+      <select id="searchType" onchange="renderVehicles()">
+        <option value="all">All</option>
+        <option value="vin">VIN</option>
+        <option value="last6">Last 6 VIN</option>
+        <option value="callNumber">Call #</option>
+        <option value="plate">Plate #</option>
+        <option value="location">Lot Location</option>
+        <option value="status">Status</option>
+      </select>
+      <input id="searchBox" oninput="renderVehicles()" placeholder="Search inventory...">
     </div>
-  </div>
+  </header>
 
-  <div class="top-search no-print">
-    <select id="searchType" onchange="renderVehicles()">
-      <option value="all">All</option>
-      <option value="vin">VIN</option>
-      <option value="last6">Last 6 VIN</option>
-      <option value="callNumber">Call Number</option>
-      <option value="plate">Plate Number</option>
-      <option value="location">Lot Location</option>
-      <option value="status">Status</option>
-    </select>
-    <input id="searchBox" oninput="renderVehicles()" placeholder="Search inventory..." />
-  </div>
-</header>
+  <section class="company-strip no-print" id="companyStrip"></section>
 
-<section class="logo-strip">
-  <img src="henrys-logo.png" alt="Henry's Wrecker Service">
-  <img src="road-runner-logo.png" alt="Road Runner Wrecker Service">
-  <img src="aarons-logo.webp" alt="Aaron's Towing">
-  <img src="als-logo.png" alt="Al's Towing & Storage">
-  <img src="windsor-logo.png" alt="Windsor Towing">
-</section>
+  <main class="container">
 
-<div class="container">
+    <section class="hero">
+      <div id="dashboard" class="panel">
+        <h2>Valor Fleet Inventory Dashboard</h2>
+        <p class="notice">
+          Inventory-only companion app for tow lot tracking, QR scanning, weekly/monthly inventory checks, reports, and office notes.
+        </p>
 
-  <section id="dashboard" class="panel">
-    <h2>Valor Fleet Inventory Dashboard</h2>
-    <p class="notice">Inventory-only system for tow lot tracking, QR scanning, office notes, auction tracking, and weekly/monthly inventory checks.</p>
+        <div class="grid">
+          <div>
+            <label>User Role</label>
+            <select id="role" onchange="updatePermissions()">
+              <option value="admin">Admin</option>
+              <option value="office">Office Staff</option>
+              <option value="lot">Lot Attendant</option>
+              <option value="readonly">Read Only</option>
+            </select>
+            <div class="login-note">Temporary role selector until real login/database is added.</div>
+          </div>
+          <div>
+            <label>Logged In As</label>
+            <input id="currentUser" placeholder="Name of person updating inventory">
+          </div>
+        </div>
 
-    <div class="grid">
-      <div>
-        <label>User Role</label>
-        <select id="role" onchange="updatePermissions()">
-          <option value="admin">Admin</option>
-          <option value="office">Office Staff</option>
-          <option value="lot">Lot Attendant</option>
-          <option value="readonly">Read Only</option>
-        </select>
+        <div class="quick-actions no-print">
+          <button onclick="showSection('inventoryModePanel')" class="green">Start Inventory</button>
+          <button onclick="showSection('addVehiclePanel')">Add Vehicle</button>
+          <button onclick="showSection('reportsPanel')" class="navy">View Reports</button>
+        </div>
       </div>
-      <div>
-        <label>Current User Name</label>
-        <input id="currentUser" placeholder="Name of person updating inventory">
+
+      <div class="panel">
+        <h2>Company / Lot View</h2>
+        <p id="activeCompanyText" class="notice">Showing all companies.</p>
+        <div id="locationButtons" class="location-buttons"></div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="stats" id="stats"></section>
+    <section class="stats" id="stats"></section>
 
-  <section id="addVehiclePanel" class="panel permission-edit">
-    <h2>Add / Update Vehicle</h2>
+    <section id="addVehiclePanel" class="panel permission-edit">
+      <h2>Add / Update Vehicle</h2>
+      <p class="notice">
+        Use this section when adding a vehicle to inventory. Use the VIN scanner on phone, save the vehicle, then print and attach the QR sticker.
+      </p>
 
-    <div class="grid">
-      <div><label>VIN</label><input id="vin" placeholder="Full VIN"></div>
-      <div><label>Call / Job Number</label><input id="callNumber" placeholder="Example: 24-00123"></div>
-      <div><label>Plate Number</label><input id="plate" placeholder="ABC-1234"></div>
-      <div><label>Plate State</label><input id="plateState" placeholder="VA, MD, DC"></div>
-      <div><label>Year</label><input id="year" placeholder="2020"></div>
-      <div><label>Make</label><input id="make" placeholder="Ford"></div>
-      <div><label>Model</label><input id="model" placeholder="F-150"></div>
-      <div><label>Color</label><input id="color" placeholder="White"></div>
-      <div><label>Mileage</label><input id="mileage" placeholder="123456"></div>
-      <div>
-        <label>Keys?</label>
-        <select id="hasKeys">
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-          <option value="Unknown">Unknown</option>
-        </select>
+      <div class="quick-actions no-print">
+        <button class="orange" onclick="startVinScanner()">Scan VIN</button>
+        <button class="example-qr" onclick="printExampleQR()">Example QR Code / Sticker</button>
       </div>
-      <div>
-        <label>Status</label>
-        <select id="status">
-          <option value="Active">Active</option>
-          <option value="Hold">Hold</option>
-          <option value="Auction">Auction</option>
-          <option value="Sold">Sold</option>
-          <option value="Released">Released</option>
-          <option value="Needs Office Review">Needs Office Review</option>
-        </select>
+
+      <div class="grid">
+        <div><label>VIN</label><input id="vin" placeholder="Full VIN"></div>
+        <div><label>Call / Job Number</label><input id="callNumber" placeholder="Example: 24-00123"></div>
+        <div><label>Plate Number</label><input id="plate" placeholder="ABC-1234"></div>
+        <div><label>Plate State</label><input id="plateState" placeholder="VA, MD, DC"></div>
+        <div><label>Year</label><input id="year" placeholder="2020"></div>
+        <div><label>Make</label><input id="make" placeholder="Ford"></div>
+        <div><label>Model</label><input id="model" placeholder="F-150"></div>
+        <div><label>Color</label><input id="color" placeholder="White"></div>
+        <div><label>Mileage</label><input id="mileage" placeholder="123456"></div>
+
+        <div>
+          <label>Keys?</label>
+          <select id="hasKeys">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            <option value="Unknown">Unknown</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Status</label>
+          <select id="status">
+            <option value="Active">Active</option>
+            <option value="Hold">Hold</option>
+            <option value="Auction">Auction</option>
+            <option value="Sold">Sold</option>
+            <option value="Released">Released</option>
+            <option value="Needs Office Review">Needs Office Review</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Title Status</label>
+          <select id="titleStatus">
+            <option value="Unknown">Unknown</option>
+            <option value="No Title">No Title</option>
+            <option value="Title Received">Title Received</option>
+            <option value="Lien Paperwork">Lien Paperwork</option>
+            <option value="Ready for Auction">Ready for Auction</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Tow Category</label>
+          <select id="towCategory">
+            <option value="Unknown">Unknown</option>
+            <option value="Police">Police</option>
+            <option value="Private Property">Private Property</option>
+            <option value="Owner Request">Owner Request</option>
+            <option value="Accident">Accident</option>
+            <option value="Recovery">Recovery</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div><label>Tow Date</label><input id="towDate" type="date"></div>
+        <div><label>Storage / Impound Date</label><input id="storageDate" type="date"></div>
+        <div><label>Auction Date</label><input id="auctionDate" type="date"></div>
+        <div><label>Released Date</label><input id="releasedDate" type="date"></div>
+
+        <div>
+          <label>Vehicle Belongs To</label>
+          <select id="ownerCompany"></select>
+        </div>
+
+        <div>
+          <label>Stored At Company</label>
+          <select id="storedCompany" onchange="updateLocations()"></select>
+        </div>
+
+        <div>
+          <label>Stored At Location</label>
+          <select id="storedLocation"></select>
+        </div>
       </div>
-      <div>
-        <label>Title Status</label>
-        <select id="titleStatus">
-          <option value="Unknown">Unknown</option>
-          <option value="No Title">No Title</option>
-          <option value="Title Received">Title Received</option>
-          <option value="Lien Paperwork">Lien Paperwork</option>
-          <option value="Ready for Auction">Ready for Auction</option>
-        </select>
+
+      <label>Hold Reason</label>
+      <textarea id="holdReason" placeholder="Reason for hold, if any"></textarea>
+
+      <label>Damage / Condition Notes</label>
+      <textarea id="damageNotes" placeholder="Damage, missing parts, condition, personal property, etc."></textarea>
+
+      <label>Office / Lot Notes</label>
+      <textarea id="notes" placeholder="Release info, auction notes, storage notes, office notes, etc."></textarea>
+
+      <label>Vehicle Photos</label>
+      <input id="photoInput" type="file" accept="image/*" multiple>
+
+      <br><br>
+      <button onclick="saveVehicle()">Save Vehicle</button>
+      <button class="gray" onclick="clearForm()">Clear Form</button>
+    </section>
+
+    <section id="inventoryPanel" class="panel">
+      <h2>Current Inventory</h2>
+
+      <div class="grid no-print">
+        <div>
+          <label>Company Filter</label>
+          <select id="companyFilter" onchange="setCompanyFilter(this.value)">
+            <option value="All">All Companies</option>
+          </select>
+        </div>
+        <div>
+          <label>Lot Location Filter</label>
+          <select id="locationFilter" onchange="renderVehicles()">
+            <option value="All">All Locations</option>
+          </select>
+        </div>
+        <div>
+          <label>Status Filter</label>
+          <select id="statusFilter" onchange="renderVehicles()">
+            <option value="All">All Statuses</option>
+            <option value="Active">Active</option>
+            <option value="Hold">Hold</option>
+            <option value="Auction">Auction</option>
+            <option value="Sold">Sold</option>
+            <option value="Released">Released</option>
+            <option value="Needs Office Review">Needs Office Review</option>
+          </select>
+        </div>
+        <div>
+          <label>Quick Filter</label>
+          <select id="quickFilter" onchange="renderVehicles()">
+            <option value="All">All Vehicles</option>
+            <option value="NoKeys">Vehicles Without Keys</option>
+            <option value="AuctionSoon">Auction Coming Soon</option>
+            <option value="Released">Released Vehicles</option>
+          </select>
+        </div>
       </div>
-      <div>
-        <label>Tow Category</label>
-        <select id="towCategory">
-          <option value="Unknown">Unknown</option>
-          <option value="Police">Police</option>
-          <option value="Private Property">Private Property</option>
-          <option value="Owner Request">Owner Request</option>
-          <option value="Accident">Accident</option>
-          <option value="Recovery">Recovery</option>
-          <option value="Other">Other</option>
-        </select>
+
+      <br>
+      <div id="vehicleList" class="vehicle-list"></div>
+    </section>
+
+    <section id="inventoryModePanel" class="panel">
+      <h2>Start Inventory</h2>
+      <p class="notice">
+        Designed for quick weekly/monthly lot checks. Scan QR → vehicle is marked still in inventory. Add mobile notes for missing/moved vehicles. Admin can add a response note later.
+      </p>
+
+      <div class="scanner-layout">
+        <div>
+          <div class="grid">
+            <div>
+              <label>Inventory Type</label>
+              <select id="inventoryType">
+                <option value="Weekly">Weekly</option>
+                <option value="Monthly">Monthly</option>
+              </select>
+            </div>
+            <div>
+              <label>Inventory Lot</label>
+              <select id="inventoryLocation"></select>
+            </div>
+          </div>
+
+          <div class="quick-actions no-print">
+            <button class="green" onclick="startInventorySession()">Start Inventory</button>
+            <button class="orange" onclick="startInventoryScanner()">Start QR Scanner</button>
+            <button class="gray" onclick="stopScanner()">Stop Scanner</button>
+          </div>
+
+          <video id="preview" class="hidden"></video>
+          <canvas id="scanCanvas" class="hidden"></canvas>
+        </div>
+
+        <div>
+          <h3>Inventory Progress</h3>
+          <div id="inventoryProgress" class="notice">No inventory session started.</div>
+          <div id="currentScanResult"></div>
+        </div>
       </div>
-      <div><label>Tow Date</label><input id="towDate" type="date"></div>
-      <div><label>Storage / Impound Date</label><input id="storageDate" type="date"></div>
-      <div><label>Auction Date</label><input id="auctionDate" type="date"></div>
-      <div><label>Released Date</label><input id="releasedDate" type="date"></div>
-      <div>
-        <label>Vehicle Belongs To</label>
-        <select id="ownerCompany"></select>
+
+      <div id="inventorySessionList"></div>
+    </section>
+
+    <section id="reportsPanel" class="panel">
+      <h2>Reports</h2>
+      <p class="notice">
+        Reports are simple: still in inventory, missing/not found, mobile note, and admin response note.
+      </p>
+
+      <div class="quick-actions no-print">
+        <button onclick="renderReport('Weekly')">Weekly Report</button>
+        <button onclick="renderReport('Monthly')">Monthly Report</button>
+        <button onclick="exportCSV()">Export Full Inventory CSV</button>
+        <button onclick="exportCurrentReportCSV()">Export Current Report CSV</button>
+        <button onclick="window.print()">Print</button>
+        <button class="danger permission-admin" onclick="clearInventory()">Clear All Inventory</button>
       </div>
-      <div>
-        <label>Stored At Company</label>
-        <select id="storedCompany" onchange="updateLocations()"></select>
-      </div>
-      <div>
-        <label>Stored At Location</label>
-        <select id="storedLocation"></select>
-      </div>
-    </div>
 
-    <label>Hold Reason</label>
-    <textarea id="holdReason" placeholder="Reason for hold, if any"></textarea>
+      <div id="reportOutput"></div>
+    </section>
 
-    <label>Damage / Condition Notes</label>
-    <textarea id="damageNotes" placeholder="Damage, missing parts, condition, personal property, etc."></textarea>
-
-    <label>Office / Lot Notes</label>
-    <textarea id="notes" placeholder="Release info, auction notes, office notes, storage notes, etc."></textarea>
-
-    <label>Vehicle Photos</label>
-    <input id="photoInput" type="file" accept="image/*" multiple>
-
-    <br><br>
-    <button onclick="saveVehicle()">Save Vehicle</button>
-    <button class="gray" onclick="clearForm()">Clear Form</button>
-  </section>
-
-  <section id="inventoryPanel" class="panel">
-    <h2>Inventory</h2>
-
-    <div class="tabs no-print" id="tabs"></div>
-
-    <div class="grid no-print">
-      <div>
-        <label>Company Filter</label>
-        <select id="companyFilter" onchange="renderVehicles()">
-          <option value="All">All Companies</option>
-        </select>
-      </div>
-      <div>
-        <label>Status Filter</label>
-        <select id="statusFilter" onchange="renderVehicles()">
-          <option value="All">All Statuses</option>
-          <option value="Active">Active</option>
-          <option value="Hold">Hold</option>
-          <option value="Auction">Auction</option>
-          <option value="Sold">Sold</option>
-          <option value="Released">Released</option>
-          <option value="Needs Office Review">Needs Office Review</option>
-        </select>
-      </div>
-      <div>
-        <label>Quick Filter</label>
-        <select id="quickFilter" onchange="renderVehicles()">
-          <option value="All">All Vehicles</option>
-          <option value="NoKeys">Vehicles Without Keys</option>
-          <option value="AuctionSoon">Auction Coming Soon</option>
-          <option value="Released">Released Vehicles</option>
-        </select>
-      </div>
-    </div>
-
-    <br>
-    <div id="vehicleList"></div>
-  </section>
-
-  <section id="inventoryCheckPanel" class="panel">
-    <h2>Inventory Check</h2>
-    <p class="notice">Use this for weekly or monthly inventory. Start a session, scan each vehicle QR code, confirm location, and export the completed sheet.</p>
-
-    <div class="grid">
-      <div>
-        <label>Inventory Type</label>
-        <select id="inventoryType">
-          <option value="Weekly">Weekly</option>
-          <option value="Monthly">Monthly</option>
-        </select>
-      </div>
-      <div>
-        <label>Inventory Location</label>
-        <select id="inventoryLocation"></select>
-      </div>
-    </div>
-
-    <br>
-    <button onclick="startInventorySession()">Start Inventory</button>
-    <button class="orange" onclick="startScanner()">Start QR Scanner</button>
-    <button class="gray" onclick="stopScanner()">Stop Scanner</button>
-
-    <div class="scanner-wrap">
-      <video id="preview" class="hidden"></video>
-      <canvas id="scanCanvas" class="hidden"></canvas>
-    </div>
-
-    <h3>Inventory Progress</h3>
-    <div id="inventoryProgress" class="notice">No inventory session started.</div>
-
-    <div id="inventorySessionList"></div>
-  </section>
-
-  <section id="reportsPanel" class="panel">
-    <h2>Reports / Exports</h2>
-    <div class="grid">
-      <button onclick="exportCSV()">Export Full Inventory CSV</button>
-      <button onclick="exportWeeklyMonthlySheet('Weekly')">Export Weekly Inventory Sheet</button>
-      <button onclick="exportWeeklyMonthlySheet('Monthly')">Export Monthly Inventory Sheet</button>
-      <button onclick="dailyIntakeReport()">Print Daily Intake Report</button>
-      <button onclick="releasedVehicleReport()">Print Released Vehicle Report</button>
-      <button onclick="window.print()">Print Current Page</button>
-      <button class="danger permission-admin" onclick="clearInventory()">Clear All Inventory</button>
-    </div>
-  </section>
-
+  </main>
 </div>
 
 <script>
@@ -647,26 +796,48 @@
     ]
   };
 
+  const companyLogos = {
+    "Henry’s Wrecker Service": "henrys-logo.png",
+    "Road Runner Wrecker Service": "road-runner-logo.png",
+    "Aaron’s Towing": "aarons-logo.webp",
+    "Al’s Towing & Storage": "als-logo.png",
+    "Windsor Towing": "windsor-logo.webp"
+  };
+
   let vehicles = JSON.parse(localStorage.getItem("valorFleetInventory")) || [];
   let inventoryHistory = JSON.parse(localStorage.getItem("valorInventoryHistory")) || [];
   let editingId = null;
   let activeCompany = "All";
+  let activeLocation = "All";
   let currentInventorySession = null;
   let scannerStream = null;
   let scannerInterval = null;
+  let currentReportRows = [];
 
   function init() {
+    fillCompanyControls();
+    updateLocations();
+    renderCompanyStrip();
+    renderLocationButtons();
+    renderVehicles();
+    renderStats();
+    updatePermissions();
+  }
+
+  function fillCompanyControls() {
     const ownerCompany = document.getElementById("ownerCompany");
     const storedCompany = document.getElementById("storedCompany");
     const companyFilter = document.getElementById("companyFilter");
-    const companyMenu = document.getElementById("companyMenu");
+    const companyDropdown = document.getElementById("companyDropdown");
     const inventoryLocation = document.getElementById("inventoryLocation");
+    const locationFilter = document.getElementById("locationFilter");
 
     ownerCompany.innerHTML = "";
     storedCompany.innerHTML = "";
     companyFilter.innerHTML = '<option value="All">All Companies</option>';
-    companyMenu.innerHTML = '<button onclick="setCompanyFilter(\'All\')">All Companies</button>';
+    companyDropdown.innerHTML = '<button onclick="setCompanyFilter(\'All\')">All Companies</button>';
     inventoryLocation.innerHTML = '<option value="All">All Locations</option>';
+    locationFilter.innerHTML = '<option value="All">All Locations</option>';
 
     Object.keys(companies).forEach(company => {
       ownerCompany.add(new Option(company, company));
@@ -676,28 +847,87 @@
       const btn = document.createElement("button");
       btn.textContent = company;
       btn.onclick = () => setCompanyFilter(company);
-      companyMenu.appendChild(btn);
+      companyDropdown.appendChild(btn);
 
       companies[company].forEach(location => {
         inventoryLocation.add(new Option(`${company} - ${location}`, location));
+        locationFilter.add(new Option(`${company} - ${location}`, location));
       });
     });
+  }
 
-    updateLocations();
-    renderTabs();
+  function renderCompanyStrip() {
+    const strip = document.getElementById("companyStrip");
+    strip.innerHTML = "";
+
+    Object.keys(companies).forEach(company => {
+      const pill = document.createElement("div");
+      pill.className = "company-pill" + (activeCompany === company ? " active" : "");
+      pill.onclick = () => setCompanyFilter(company);
+      pill.innerHTML = `<img src="${companyLogos[company]}" alt="${company}"><span>${companyShort(company)}</span>`;
+      strip.appendChild(pill);
+    });
+  }
+
+  function companyShort(company) {
+    return company
+      .replace(" Wrecker Service", "")
+      .replace(" Wrecker Service Inc.", "")
+      .replace(" & Storage", "");
+  }
+
+  function renderLocationButtons() {
+    const box = document.getElementById("locationButtons");
+    const label = document.getElementById("activeCompanyText");
+
+    box.innerHTML = "";
+    label.textContent = activeCompany === "All" ? "Showing all companies." : `Showing ${activeCompany}. Select a lot below.`;
+
+    const allBtn = document.createElement("button");
+    allBtn.textContent = "All Locations";
+    allBtn.className = activeLocation === "All" ? "active" : "";
+    allBtn.onclick = () => setLocationFilter("All");
+    box.appendChild(allBtn);
+
+    const locations = activeCompany === "All"
+      ? Object.values(companies).flat()
+      : companies[activeCompany];
+
+    locations.forEach(location => {
+      const btn = document.createElement("button");
+      btn.textContent = location;
+      btn.className = activeLocation === location ? "active" : "";
+      btn.onclick = () => setLocationFilter(location);
+      box.appendChild(btn);
+    });
+  }
+
+  function setCompanyFilter(company) {
+    activeCompany = company;
+    activeLocation = "All";
+
+    document.getElementById("companyFilter").value = company;
+    document.getElementById("locationFilter").value = "All";
+
+    renderCompanyStrip();
+    renderLocationButtons();
     renderVehicles();
-    renderStats();
-    updatePermissions();
+    showSection("inventoryPanel");
+  }
+
+  function setLocationFilter(location) {
+    activeLocation = location;
+    document.getElementById("locationFilter").value = location;
+    renderLocationButtons();
+    renderVehicles();
+    showSection("inventoryPanel");
   }
 
   function updateLocations() {
     const storedCompany = document.getElementById("storedCompany");
     const storedLocation = document.getElementById("storedLocation");
     storedLocation.innerHTML = "";
-
-    companies[storedCompany.value].forEach(location => {
-      storedLocation.add(new Option(location, location));
-    });
+    companies[storedCompany.value].forEach(location => storedLocation.add(new Option(location, location)));
   }
 
   function updatePermissions() {
@@ -705,13 +935,8 @@
     const canEdit = role === "admin" || role === "office";
     const isAdmin = role === "admin";
 
-    document.querySelectorAll(".permission-edit").forEach(el => {
-      el.classList.toggle("hidden", !canEdit);
-    });
-
-    document.querySelectorAll(".permission-admin").forEach(el => {
-      el.classList.toggle("hidden", !isAdmin);
-    });
+    document.querySelectorAll(".permission-edit").forEach(el => el.classList.toggle("hidden", !canEdit));
+    document.querySelectorAll(".permission-admin").forEach(el => el.classList.toggle("hidden", !isAdmin));
 
     renderVehicles();
   }
@@ -736,21 +961,8 @@
     `;
   }
 
-  function renderTabs() {
-    const tabs = document.getElementById("tabs");
-    tabs.innerHTML = "";
-
-    ["All", ...Object.keys(companies)].forEach(company => {
-      const btn = document.createElement("button");
-      btn.className = "tab" + (activeCompany === company ? " active" : "");
-      btn.textContent = company;
-      btn.onclick = () => {
-        activeCompany = company;
-        renderTabs();
-        renderVehicles();
-      };
-      tabs.appendChild(btn);
-    });
+  function value(id) {
+    return document.getElementById(id).value.trim();
   }
 
   function saveVehicle() {
@@ -758,7 +970,7 @@
     const existing = editingId ? vehicles.find(v => v.id === editingId) : null;
 
     const vehicle = {
-      id: editingId || Date.now().toString(),
+      id: editingId || createVehicleId(),
       vin: value("vin"),
       callNumber: value("callNumber"),
       plate: value("plate"),
@@ -794,13 +1006,11 @@
       return;
     }
 
-    if (!existing || existing.notes !== vehicle.notes) {
-      vehicle.notesHistory.push({
-        date: new Date().toLocaleString(),
-        user: getCurrentUser(),
-        note: vehicle.notes || "Updated vehicle record"
-      });
-    }
+    vehicle.notesHistory.push({
+      date: new Date().toLocaleString(),
+      user: getCurrentUser(),
+      note: editingId ? "Vehicle record updated." : "Vehicle added to inventory."
+    });
 
     if (photoFiles.length > 0) {
       let loaded = 0;
@@ -818,6 +1028,10 @@
     }
   }
 
+  function createVehicleId() {
+    return "VFI-" + Date.now() + "-" + Math.random().toString(36).slice(2, 7).toUpperCase();
+  }
+
   function finalizeSave(vehicle) {
     if (editingId) {
       vehicles = vehicles.map(v => v.id === editingId ? vehicle : v);
@@ -831,10 +1045,10 @@
     renderVehicles();
     renderStats();
     showSection("inventoryPanel");
-  }
 
-  function value(id) {
-    return document.getElementById(id).value.trim();
+    setTimeout(() => {
+      if (confirm("Print QR sticker for this vehicle now?")) printQR(vehicle.id);
+    }, 250);
   }
 
   function clearForm() {
@@ -857,9 +1071,11 @@
     const search = document.getElementById("searchBox").value.toLowerCase();
     const searchType = document.getElementById("searchType").value;
     const companyFilter = document.getElementById("companyFilter").value;
+    const locationFilter = document.getElementById("locationFilter").value;
     const statusFilter = document.getElementById("statusFilter").value;
     const quickFilter = document.getElementById("quickFilter").value;
     const role = document.getElementById("role").value;
+
     const canEdit = role === "admin" || role === "office";
     const canNote = role === "admin" || role === "office" || role === "lot";
 
@@ -871,7 +1087,7 @@
       const fields = {
         all: `${v.vin} ${last6} ${v.callNumber} ${v.plate} ${v.plateState} ${v.year} ${v.make} ${v.model} ${v.color} ${v.ownerCompany} ${v.storedCompany} ${v.storedLocation} ${v.status}`.toLowerCase(),
         vin: `${v.vin}`.toLowerCase(),
-        last6: last6,
+        last6,
         callNumber: `${v.callNumber}`.toLowerCase(),
         plate: `${v.plate} ${v.plateState}`.toLowerCase(),
         location: `${v.storedLocation} ${v.storedCompany}`.toLowerCase(),
@@ -879,30 +1095,22 @@
       };
 
       const matchesSearch = fields[searchType].includes(search);
-      const matchesCompany =
-        activeCompany === "All" ||
-        v.ownerCompany === activeCompany ||
-        v.storedCompany === activeCompany;
-
-      const matchesCompanyDropdown =
-        companyFilter === "All" ||
-        v.ownerCompany === companyFilter ||
-        v.storedCompany === companyFilter;
-
-      const matchesStatus =
-        statusFilter === "All" ||
-        v.status === statusFilter;
+      const matchesCompany = activeCompany === "All" || v.ownerCompany === activeCompany || v.storedCompany === activeCompany;
+      const matchesCompanyDropdown = companyFilter === "All" || v.ownerCompany === companyFilter || v.storedCompany === companyFilter;
+      const matchesActiveLocation = activeLocation === "All" || v.storedLocation === activeLocation;
+      const matchesLocationDropdown = locationFilter === "All" || v.storedLocation === locationFilter;
+      const matchesStatus = statusFilter === "All" || v.status === statusFilter;
 
       let matchesQuick = true;
       if (quickFilter === "NoKeys") matchesQuick = v.hasKeys === "No";
       if (quickFilter === "AuctionSoon") matchesQuick = isAuctionSoon(v.auctionDate);
       if (quickFilter === "Released") matchesQuick = v.status === "Released";
 
-      return matchesSearch && matchesCompany && matchesCompanyDropdown && matchesStatus && matchesQuick;
+      return matchesSearch && matchesCompany && matchesCompanyDropdown && matchesActiveLocation && matchesLocationDropdown && matchesStatus && matchesQuick;
     });
 
-    if (filtered.length === 0) {
-      list.innerHTML = `<p>No vehicles found.</p>`;
+    if (!filtered.length) {
+      list.innerHTML = `<p class="notice">No vehicles found.</p>`;
       return;
     }
 
@@ -910,37 +1118,24 @@
       const card = document.createElement("div");
       card.className = "vehicle-card";
 
-      const differentCompanyNotice =
-        v.ownerCompany !== v.storedCompany
-          ? `<p><strong style="color:#b91c1c;">Notice:</strong> Belongs to ${v.ownerCompany}, stored at ${v.storedCompany}.</p>`
-          : "";
-
       const photoHtml = (v.photos || []).map(photo => `<img src="${photo}" class="vehicle-photo">`).join("");
+      const badgeClass = statusBadgeClass(v.status);
 
       card.innerHTML = `
         <div>
-          <h3>${v.year || ""} ${v.make || ""} ${v.model || ""} ${v.color ? "- " + v.color : ""}</h3>
-
+          <h3>${v.year || ""} ${v.make || ""} ${v.model || ""} ${v.color ? "• " + v.color : ""}</h3>
           <span class="badge">VIN: ${v.vin || "N/A"}</span>
           <span class="badge">Last 6: ${v.vin ? v.vin.slice(-6) : "N/A"}</span>
           <span class="badge">Call #: ${v.callNumber || "N/A"}</span>
           <span class="badge">Plate: ${v.plate || "N/A"} ${v.plateState || ""}</span>
-          <span class="badge ${statusClass(v.status)}">Status: ${v.status}</span>
+          <span class="badge ${badgeClass}">Status: ${v.status}</span>
           <span class="badge">Keys: ${v.hasKeys}</span>
 
-          <p><strong>Mileage:</strong> ${v.mileage || "N/A"}</p>
+          <p><strong>Stored:</strong> ${v.storedCompany} • ${v.storedLocation}</p>
           <p><strong>Belongs To:</strong> ${v.ownerCompany}</p>
-          <p><strong>Stored At:</strong> ${v.storedCompany}</p>
-          <p><strong>Location:</strong> ${v.storedLocation}</p>
-          ${differentCompanyNotice}
-          <p><strong>Tow Date:</strong> ${v.towDate || "N/A"} | <strong>Storage Date:</strong> ${v.storageDate || "N/A"}</p>
-          <p><strong>Auction Date:</strong> ${v.auctionDate || "Not set"} | <strong>Released Date:</strong> ${v.releasedDate || "N/A"}</p>
-          <p><strong>Title Status:</strong> ${v.titleStatus || "Unknown"} | <strong>Category:</strong> ${v.towCategory || "Unknown"}</p>
-          <p><strong>Hold Reason:</strong> ${v.holdReason || "N/A"}</p>
-          <p><strong>Damage / Condition:</strong><br>${v.damageNotes || "No damage notes"}</p>
+          <p><strong>Tow Date:</strong> ${v.towDate || "N/A"} | <strong>Storage:</strong> ${v.storageDate || "N/A"} | <strong>Auction:</strong> ${v.auctionDate || "N/A"}</p>
           <p><strong>Notes:</strong><br>${v.notes || "No notes"}</p>
-          <p><strong>Last Updated:</strong> ${v.updatedAt || "N/A"} by ${v.updatedBy || "Unknown"}</p>
-
+          <p><strong>Updated:</strong> ${v.updatedAt || "N/A"} by ${v.updatedBy || "Unknown"}</p>
           <div>${photoHtml}</div>
 
           <div class="vehicle-actions no-print">
@@ -955,6 +1150,7 @@
 
         <div class="qr-box">
           <div id="qr-${v.id}"></div>
+          <small>Vehicle QR</small>
         </div>
       `;
 
@@ -968,12 +1164,12 @@
     });
   }
 
-  function statusClass(status) {
-    if (status === "Active") return "status-active";
-    if (status === "Hold") return "status-hold";
-    if (status === "Released") return "status-released";
-    if (status === "Auction") return "status-auction";
-    return "";
+  function statusBadgeClass(status) {
+    if (status === "Active") return "green-text";
+    if (status === "Hold") return "orange-text";
+    if (status === "Auction") return "red-text";
+    if (status === "Released" || status === "Sold") return "gray-text";
+    return "orange-text";
   }
 
   function isAuctionSoon(date) {
@@ -989,7 +1185,6 @@
     if (!v) return;
 
     editingId = id;
-
     Object.keys(v).forEach(key => {
       const el = document.getElementById(key);
       if (el && key !== "photos" && key !== "notesHistory") el.value = v[key] || "";
@@ -998,22 +1193,19 @@
     document.getElementById("storedCompany").value = v.storedCompany;
     updateLocations();
     document.getElementById("storedLocation").value = v.storedLocation;
-
     showSection("addVehiclePanel");
   }
 
   function addNote(id) {
     const v = vehicles.find(vehicle => vehicle.id === id);
+    if (!v) return;
+
     const note = prompt("Add note:");
     if (!note) return;
 
     v.notes = v.notes ? `${v.notes}\n\n${note}` : note;
     v.notesHistory = v.notesHistory || [];
-    v.notesHistory.push({
-      date: new Date().toLocaleString(),
-      user: getCurrentUser(),
-      note
-    });
+    v.notesHistory.push({ date: new Date().toLocaleString(), user: getCurrentUser(), note });
     v.updatedAt = new Date().toLocaleString();
     v.updatedBy = getCurrentUser();
 
@@ -1056,24 +1248,15 @@
     localStorage.setItem("valorInventoryHistory", JSON.stringify(inventoryHistory));
   }
 
-  function setCompanyFilter(company) {
-    activeCompany = company;
-    document.getElementById("companyFilter").value = company;
-    renderTabs();
-    renderVehicles();
-  }
-
-  function showSection(id) {
-    document.getElementById(id).scrollIntoView({ behavior: "smooth" });
-  }
-
   function startInventorySession() {
     currentInventorySession = {
-      id: Date.now().toString(),
+      id: "INV-" + Date.now(),
       type: document.getElementById("inventoryType").value,
       location: document.getElementById("inventoryLocation").value,
       date: new Date().toLocaleString(),
+      user: getCurrentUser(),
       checked: {},
+      adminNotes: {},
       completed: false
     };
 
@@ -1101,26 +1284,31 @@
     progress.innerHTML = `
       <strong>${currentInventorySession.type} Inventory</strong><br>
       Started: ${currentInventorySession.date}<br>
-      Location: ${currentInventorySession.location}<br>
+      Done By: ${currentInventorySession.user}<br>
+      Lot: ${currentInventorySession.location}<br>
       Progress: ${checkedCount} / ${targetVehicles.length}
     `;
 
     list.innerHTML = "";
 
     targetVehicles.forEach(v => {
-      const checked = currentInventorySession.checked[v.id];
+      const check = currentInventorySession.checked[v.id];
       const row = document.createElement("div");
-      row.className = "inventory-row";
+      row.className = "inventory-step";
       row.innerHTML = `
         <strong>${v.year || ""} ${v.make || ""} ${v.model || ""}</strong><br>
         VIN: ${v.vin || "N/A"} | Call #: ${v.callNumber || "N/A"} | Plate: ${v.plate || "N/A"}<br>
         Location: ${v.storedLocation}<br>
-        <strong>Inventory Status:</strong> ${checked ? checked.status : "Not Checked"}
-        <div class="vehicle-actions">
-          <button class="green" onclick="markInventory('${v.id}', 'Found')">Found</button>
+        <strong>Result:</strong> ${check ? check.result : "Not Checked"}<br>
+        <strong>Mobile Note:</strong> ${check ? check.mobileNote || "None" : "None"}<br>
+        <strong>Admin Response:</strong> ${check ? check.adminNote || "None" : "None"}
+
+        <div class="vehicle-actions no-print">
+          <button class="green" onclick="markInventory('${v.id}', 'Still In Inventory')">Still Here</button>
           <button class="danger" onclick="markInventory('${v.id}', 'Not Found')">Not Found</button>
           <button class="orange" onclick="markInventory('${v.id}', 'Moved Lot')">Moved Lot</button>
-          <button class="gray" onclick="markInventory('${v.id}', 'Needs Office Review')">Needs Office Review</button>
+          <button class="gray" onclick="markInventory('${v.id}', 'Needs Office Review')">Office Review</button>
+          <button onclick="adminInventoryNote('${v.id}')">Admin Note</button>
         </div>
       `;
       list.appendChild(row);
@@ -1128,24 +1316,32 @@
 
     const finishBtn = document.createElement("button");
     finishBtn.textContent = "Complete Inventory Session";
+    finishBtn.className = "green";
     finishBtn.onclick = completeInventorySession;
     list.appendChild(finishBtn);
   }
 
-  function markInventory(id, status) {
+  function markInventory(id, result) {
     if (!currentInventorySession) {
       alert("Start an inventory session first.");
       return;
     }
 
+    let mobileNote = "";
+    if (result !== "Still In Inventory") {
+      mobileNote = prompt("Add a quick note explaining where it is or what happened:") || "";
+    }
+
     currentInventorySession.checked[id] = {
-      status,
+      result,
+      mobileNote,
+      adminNote: currentInventorySession.checked[id]?.adminNote || "",
       date: new Date().toLocaleString(),
       user: getCurrentUser()
     };
 
     const v = vehicles.find(vehicle => vehicle.id === id);
-    if (v && status === "Needs Office Review") {
+    if (v && result === "Needs Office Review") {
       v.status = "Needs Office Review";
     }
 
@@ -1154,20 +1350,75 @@
     renderVehicles();
   }
 
+  function adminInventoryNote(id) {
+    if (!currentInventorySession || !currentInventorySession.checked[id]) {
+      alert("Mark this vehicle first, then add an admin note.");
+      return;
+    }
+
+    const note = prompt("Admin response note:");
+    if (note === null) return;
+
+    currentInventorySession.checked[id].adminNote = note;
+    saveStorage();
+    renderInventorySession();
+  }
+
   function completeInventorySession() {
     if (!currentInventorySession) return;
+
+    const targetVehicles = vehicles.filter(v => {
+      if (v.status === "Released" || v.status === "Sold") return false;
+      if (currentInventorySession.location === "All") return true;
+      return v.storedLocation === currentInventorySession.location;
+    });
+
+    targetVehicles.forEach(v => {
+      if (!currentInventorySession.checked[v.id]) {
+        currentInventorySession.checked[v.id] = {
+          result: "Not Scanned",
+          mobileNote: "Vehicle was not scanned during inventory.",
+          adminNote: "",
+          date: new Date().toLocaleString(),
+          user: getCurrentUser()
+        };
+      }
+    });
 
     currentInventorySession.completed = true;
     inventoryHistory.push(currentInventorySession);
     saveStorage();
 
     alert("Inventory session completed and saved.");
-    exportInventorySessionCSV(currentInventorySession);
+    renderReport(currentInventorySession.type);
     currentInventorySession = null;
     renderInventorySession();
+    showSection("reportsPanel");
   }
 
-  async function startScanner() {
+  async function startInventoryScanner() {
+    startScanner((vehicleId) => {
+      const vehicle = vehicles.find(v => v.id === vehicleId);
+      if (vehicle) {
+        markInventory(vehicle.id, "Still In Inventory");
+        document.getElementById("currentScanResult").innerHTML =
+          `<p class="notice">Scanned: ${vehicle.year || ""} ${vehicle.make || ""} ${vehicle.model || ""}</p>`;
+      } else {
+        alert("QR scanned, but no matching vehicle found.");
+      }
+    });
+  }
+
+  async function startVinScanner() {
+    startScanner((text) => {
+      document.getElementById("vin").value = text;
+      stopScanner();
+      showSection("addVehiclePanel");
+      alert("VIN scanned into form.");
+    });
+  }
+
+  async function startScanner(onScan) {
     const video = document.getElementById("preview");
     const canvas = document.getElementById("scanCanvas");
     const ctx = canvas.getContext("2d");
@@ -1179,77 +1430,99 @@
       video.classList.remove("hidden");
       video.play();
 
+      if (scannerInterval) clearInterval(scannerInterval);
+
       scannerInterval = setInterval(() => {
         if (video.readyState === video.HAVE_ENOUGH_DATA) {
           canvas.width = video.videoWidth;
           canvas.height = video.videoHeight;
           ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
           const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
           const code = jsQR(imageData.data, imageData.width, imageData.height);
-
-          if (code) {
-            const id = code.data;
-            const vehicle = vehicles.find(v => v.id === id);
-
-            if (vehicle) {
-              markInventory(vehicle.id, "Found");
-              alert(`Found: ${vehicle.year || ""} ${vehicle.make || ""} ${vehicle.model || ""}`);
-            } else {
-              alert("QR scanned, but no matching vehicle record found.");
-            }
-          }
+          if (code) onScan(code.data);
         }
       }, 900);
     } catch (err) {
-      alert("Camera access failed. Make sure the site is opened with HTTPS and camera permission is allowed.");
+      alert("Camera failed. Open the app with HTTPS and allow camera permissions.");
     }
   }
 
   function stopScanner() {
     const video = document.getElementById("preview");
     video.classList.add("hidden");
-
     if (scannerInterval) clearInterval(scannerInterval);
-    if (scannerStream) {
-      scannerStream.getTracks().forEach(track => track.stop());
+    if (scannerStream) scannerStream.getTracks().forEach(track => track.stop());
+  }
+
+  function renderReport(type) {
+    const output = document.getElementById("reportOutput");
+    const sessions = inventoryHistory.filter(s => s.type === type).slice().reverse();
+
+    if (!sessions.length) {
+      output.innerHTML = `<p class="notice">No ${type.toLowerCase()} inventory reports yet.</p>`;
+      currentReportRows = [];
+      return;
     }
-  }
 
-  function exportCSV() {
-    const rows = vehicles.map(vehicleToRow);
-    downloadCSV("valor-fleet-full-inventory.csv", rows);
-  }
-
-  function exportWeeklyMonthlySheet(type) {
-    const rows = vehicles
-      .filter(v => v.status !== "Released" && v.status !== "Sold")
-      .map(vehicleToRow);
-
-    downloadCSV(`valor-fleet-${type.toLowerCase()}-inventory-sheet.csv`, rows);
-  }
-
-  function exportInventorySessionCSV(session) {
+    const session = sessions[0];
     const rows = Object.keys(session.checked).map(id => {
       const v = vehicles.find(vehicle => vehicle.id === id) || {};
+      const check = session.checked[id];
+
       return {
-        InventoryType: session.type,
-        InventoryDate: session.date,
-        InventoryLocation: session.location,
-        CheckStatus: session.checked[id].status,
-        CheckedBy: session.checked[id].user,
+        Type: session.type,
+        Date: session.date,
+        DoneBy: session.user,
         VIN: v.vin || "",
         Last6: v.vin ? v.vin.slice(-6) : "",
         CallNumber: v.callNumber || "",
         Plate: v.plate || "",
-        Year: v.year || "",
-        Make: v.make || "",
-        Model: v.model || "",
-        StoredLocation: v.storedLocation || ""
+        Vehicle: `${v.year || ""} ${v.make || ""} ${v.model || ""}`.trim(),
+        Lot: v.storedLocation || "",
+        Result: check.result,
+        MobileNote: check.mobileNote || "",
+        AdminResponse: check.adminNote || ""
       };
     });
 
-    downloadCSV(`valor-fleet-${session.type.toLowerCase()}-completed-inventory.csv`, rows);
+    currentReportRows = rows;
+
+    output.innerHTML = `
+      <h3>${type} Inventory Report</h3>
+      <p><strong>Date:</strong> ${session.date} | <strong>Done By:</strong> ${session.user}</p>
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th>Vehicle</th>
+            <th>VIN / Call</th>
+            <th>Lot</th>
+            <th>Result</th>
+            <th>Mobile Note</th>
+            <th>Admin Response</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map(r => `
+            <tr>
+              <td>${r.Vehicle}</td>
+              <td>${r.VIN}<br>${r.CallNumber}</td>
+              <td>${r.Lot}</td>
+              <td>${r.Result}</td>
+              <td>${r.MobileNote}</td>
+              <td>${r.AdminResponse}</td>
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function exportCurrentReportCSV() {
+    downloadCSV("valor-fleet-current-report.csv", currentReportRows);
+  }
+
+  function exportCSV() {
+    downloadCSV("valor-fleet-full-inventory.csv", vehicles.map(vehicleToRow));
   }
 
   function vehicleToRow(v) {
@@ -1275,8 +1548,6 @@
       OwnerCompany: v.ownerCompany || "",
       StoredCompany: v.storedCompany || "",
       StoredLocation: v.storedLocation || "",
-      HoldReason: v.holdReason || "",
-      DamageNotes: v.damageNotes || "",
       Notes: v.notes || "",
       UpdatedAt: v.updatedAt || "",
       UpdatedBy: v.updatedBy || ""
@@ -1292,7 +1563,7 @@
     const headers = Object.keys(rows[0]);
     const csv = [
       headers.join(","),
-      ...rows.map(row => headers.map(h => `"${String(row[h]).replace(/"/g, '""')}"`).join(","))
+      ...rows.map(row => headers.map(h => `"${String(row[h] ?? "").replace(/"/g, '""')}"`).join(","))
     ].join("\n");
 
     const blob = new Blob([csv], { type: "text/csv" });
@@ -1310,8 +1581,7 @@
 
     const win = window.open("", "_blank");
     win.document.write(`
-      <html>
-      <head><title>Vehicle Record</title></head>
+      <html><head><title>Vehicle Record</title></head>
       <body style="font-family:Arial;padding:20px;">
         <h1>Valor Fleet Inventory</h1>
         <h2>${v.year || ""} ${v.make || ""} ${v.model || ""}</h2>
@@ -1322,8 +1592,7 @@
         <p><strong>Stored Location:</strong> ${v.storedLocation}</p>
         <p><strong>Notes:</strong><br>${v.notes || ""}</p>
         <script>window.print();<\/script>
-      </body>
-      </html>
+      </body></html>
     `);
     win.document.close();
   }
@@ -1336,18 +1605,24 @@
     win.document.write(`
       <html>
       <head>
-        <title>QR Label</title>
+        <title>QR Sticker</title>
         <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"><\/script>
+        <style>
+          body { font-family: Arial; text-align: center; padding: 20px; }
+          .label { border: 2px solid #111; padding: 14px; width: 280px; margin: auto; }
+        </style>
       </head>
-      <body style="font-family:Arial;text-align:center;padding:20px;">
-        <h2>Valor Fleet Inventory</h2>
-        <div id="qr"></div>
-        <p><strong>${v.year || ""} ${v.make || ""} ${v.model || ""}</strong></p>
-        <p>VIN: ${v.vin || "N/A"}</p>
-        <p>Call #: ${v.callNumber || "N/A"}</p>
+      <body>
+        <div class="label">
+          <h2>Valor Fleet Inventory</h2>
+          <div id="qr"></div>
+          <p><strong>${v.year || ""} ${v.make || ""} ${v.model || ""}</strong></p>
+          <p>VIN: ${v.vin || "N/A"}</p>
+          <p>Call #: ${v.callNumber || "N/A"}</p>
+        </div>
         <script>
           new QRCode(document.getElementById("qr"), { text: "${id}", width: 180, height: 180 });
-          setTimeout(() => window.print(), 500);
+          setTimeout(() => window.print(), 600);
         <\/script>
       </body>
       </html>
@@ -1355,22 +1630,33 @@
     win.document.close();
   }
 
-  function dailyIntakeReport() {
-    const today = new Date().toISOString().slice(0, 10);
-    document.getElementById("searchBox").value = today;
-    document.getElementById("searchType").value = "all";
-    alert("Showing today's matching records. Use print if needed.");
-    renderVehicles();
+  function printExampleQR() {
+    const win = window.open("", "_blank");
+    win.document.write(`
+      <html>
+      <head>
+        <title>Example QR Sticker</title>
+        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"><\/script>
+      </head>
+      <body style="font-family:Arial;text-align:center;padding:20px;">
+        <h2>Example Valor Fleet QR Sticker</h2>
+        <div id="qr"></div>
+        <p>This is a sample. Real stickers print after saving a vehicle.</p>
+        <script>
+          new QRCode(document.getElementById("qr"), { text: "EXAMPLE-VALOR-FLEET-QR", width: 180, height: 180 });
+          setTimeout(() => window.print(), 600);
+        <\/script>
+      </body>
+      </html>
+    `);
+    win.document.close();
   }
 
-  function releasedVehicleReport() {
-    document.getElementById("quickFilter").value = "Released";
-    renderVehicles();
-    showSection("inventoryPanel");
+  function showSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: "smooth" });
   }
 
   init();
 </script>
-
 </body>
 </html>
