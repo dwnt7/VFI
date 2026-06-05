@@ -504,16 +504,44 @@
     </div>
 
     <div class="top-search no-print">
-      <select id="searchType" onchange="renderVehicles()">
-        <option value="all">All</option>
-        <option value="vin">VIN</option>
-        <option value="last6">Last 6 VIN</option>
-        <option value="callNumber">Call #</option>
-        <option value="plate">Plate #</option>
-        <option value="location">Lot Location</option>
-        <option value="status">Status</option>
-      </select>
-      <input id="searchBox" oninput="renderVehicles()" placeholder="Search inventory...">
+<div class="search-container">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="🔍 Search Inventory..."
+        onclick="toggleSearchMenu()"
+    >
+
+    <div id="searchMenu" class="search-menu">
+
+        <div onclick="setSearchType('VIN')">
+            VIN Number
+        </div>
+
+        <div onclick="setSearchType('Call Number')">
+            Call Number
+        </div>
+
+        <div onclick="setSearchType('Plate Number')">
+            Plate Number
+        </div>
+
+        <div onclick="setSearchType('Lot Location')">
+            Lot Location
+        </div>
+
+        <div onclick="setSearchType('Company')">
+            Company
+        </div>
+
+        <div onclick="setSearchType('Auction Date')">
+            Auction Date
+        </div>
+
+    </div>
+
+</div>
     </div>
   </header>
 
