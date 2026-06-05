@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valor Fleet Inventory</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <style>
+    :root {
+      --red: #b91c1c;
+      --blue: #1d4ed8;
+      --navy: #0f172a;
+      --white: #ffffff;
+      --light: #f8fafc;
+      --border: #cbd5e1;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--light);
+      color: var(--navy);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--red), var(--blue));
+      color: white;
+      padding: 24px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input, select, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-sizing: border-box;
+    }
+
+    textarea {
+      min-height: 80px;
+    }
+
+    button {
+      background: var(--blue);
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .danger {
+      background: var(--red);
+    }
+
+    .small-btn {
+      width: auto;
+      padding: 8px 12px;
+      margin-right: 6px;
+      margin-top: 8px;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tab {
+      width: auto;
+      background: white;
+      color: var(--blue);
+      border: 2px solid var(--blue);
+    }
+
+    .tab.active {
+      background: var(--blue);
+      color: white;
+    }
+
+    .vehicle-card {
+      border-left: 6px solid var(--blue);
+      background: white;
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .vehicle-card h3 {
+      margin-top: 0;
+      color: var(--red);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #e0ecff;
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: bold;
+      margin: 2px;
+    }
+
+    .qr {
+      margin-top: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .notice {
+      background: #eff6ff;
+      border-left: 5px solid var(--blue);
+      padding: 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Valor Fleet Inventory</h1>
+  <p>Tow Lot Vehicle Inventory System</p>
+</header>
+
+<div class="container">
+
+  <div class="panel">
+    <h2>Login / Permissions</h2>
+    <div class="grid">
+      <div>
+        <label>User Role</label>
+        <select id="role">
+          <option value="employee">Employee</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+    </div>
+    <p class="notice">
+      Admin can add, edit, delete, and export inventory. Employees can view inventory and update notes.
+    </p>
+  </div>
+
+  <div class="panel admin-only">
+    <h2>Add / Update Vehicle</h2>
+    <div class="grid">
+      <div>
+        <label>VIN</label>
+        <input id="vin" placeholder="Full VIN" />
+      </div>
+      <div>
+        <label>Call / Job Number</label>
+        <input id="callNumber" placeholder="Example: 24-00123" />
+      </div>
+      <div>
+        <label>Year</label>
+        <input id="year" placeholder="2020" />
+      </div>
+      <div>
+        <label>Make</label>
+        <input id="make" placeholder="Ford" />
+      </div>
+      <div>
+        <label>Model</label>
+        <input id="model" placeholder="F-150" />
+      </div>
+      <div>
+        <label>Mileage</label>
+        <input id="mileage" placeholder="123456" />
+      </div>
+      <div>
+        <label>Keys?</label>
+        <select id="hasKeys">
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+      <div>
+        <label>Vehicle Belongs To</label>
+        <select id="ownerCompany"></select>
+      </div>
+      <div>
+        <label>Stored At Company</label>
+        <select id="storedCompany"></select>
+      </div>
+      <div>
+        <label>Stored At Location</label>
+        <select id="storedLocation"></select>
+      </div>
+      <div>
+        <label>Auction Date</label>
+        <input id="auctionDate" type="date" />
+      </div>
+    </div>
+
+    <label>Notes / Office Notes</label>
+    <textarea id="notes" placeholder="Condition, title status, release info, auction notes, etc."></textarea>
+
+    <button onclick="saveVehicle()">Save Vehicle</button>
+  </div>
+
+  <div class="panel">
+    <h2>Search / Filter</h2>
+    <div class="grid">
+      <div>
+        <label>Search VIN, last 6 VIN, call number, make, model</label>
+        <input id="searchBox" oninput="renderVehicles()" placeholder="Search inventory..." />
+      </div>
+      <div>
+        <label>Filter Company</label>
+        <select id="companyFilter" onchange="renderVehicles()">
+          <option value="All">All Companies</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div id="vehicleList"></div>
+
+  <div class="panel admin-only">
+    <h2>Admin Tools</h2>
+    <button onclick="exportInventory()">Export Inventory JSON</button>
+    <button class="danger" onclick="clearInventory()">Clear All Inventory</button>
+  </div>
+
+</div>
+
+<script>
+  const companies = {
+    "Henry’s Wrecker Service": [
+      "2810 Hartland Road, Falls Church, VA 22043",
+      "5520 Vine Street, Alexandria, VA 22310"
+    ],
+    "Road Runner Wrecker Service": [
+      "19431 Samuel’s Mill Ct, Leesburg, VA 20175"
+    ],
+    "Aaron’s Towing": [
+      "4265 Burrough Drive, Warrenton, VA 20187",
+      "4633 Lee Highway, Warrenton, VA 20187",
+      "12209 James Madison Street, Remington, VA 22734",
+      "4176 Belvoir Road, Marshall, VA 20115"
+    ],
+    "Al’s Towing & Storage": [
+      "8109 Randell Road, Falls Church, VA 22042",
+      "11 Douglas Ct, Sterling, VA 20166"
+    ]
+  };
+
+  let vehicles = JSON.parse(localStorage.getItem("valorFleetInventory")) || [];
+  let editingId = null;
+  let activeCompany = "All";
+
+  const ownerCompany = document.getElementById("ownerCompany");
+  const storedCompany = document.getElementById("storedCompany");
+  const storedLocation = document.getElementById("storedLocation");
+  const companyFilter = document.getElementById("companyFilter");
+  const role = document.getElementById("role");
+
+  function init() {
+    Object.keys(companies).forEach(company => {
+      ownerCompany.add(new Option(company, company));
+      storedCompany.add(new Option(company, company));
+      companyFilter.add(new Option(company, company));
+    });
+
+    storedCompany.addEventListener("change", updateLocations);
+    role.addEventListener("change", updatePermissions);
+
+    updateLocations();
+    renderTabs();
+    renderVehicles();
+    updatePermissions();
+  }
+
+  function updatePermissions() {
+    const isAdmin = role.value === "admin";
+    document.querySelectorAll(".admin-only").forEach(el => {
+      el.classList.toggle("hidden", !isAdmin);
+    });
+    renderVehicles();
+  }
+
+  function updateLocations() {
+    storedLocation.innerHTML = "";
+    companies[storedCompany.value].forEach(location => {
+      storedLocation.add(new Option(location, location));
+    });
+  }
+
+  function renderTabs() {
+    const tabs = document.getElementById("tabs");
+    tabs.innerHTML = "";
+
+    ["All", ...Object.keys(companies)].forEach(company => {
+      const btn = document.createElement("button");
+      btn.className = "tab" + (activeCompany === company ? " active" : "");
+      btn.textContent = company;
+      btn.onclick = () => {
+        activeCompany = company;
+        renderTabs();
+        renderVehicles();
+      };
+      tabs.appendChild(btn);
+    });
+  }
+
+  function saveVehicle() {
+    const vehicle = {
+      id: editingId || Date.now().toString(),
+      vin: document.getElementById("vin").value.trim(),
+      callNumber: document.getElementById("callNumber").value.trim(),
+      year: document.getElementById("year").value.trim(),
+      make: document.getElementById("make").value.trim(),
+      model: document.getElementById("model").value.trim(),
+      mileage: document.getElementById("mileage").value.trim(),
+      hasKeys: document.getElementById("hasKeys").value,
+      ownerCompany: ownerCompany.value,
+      storedCompany: storedCompany.value,
+      storedLocation: storedLocation.value,
+      auctionDate: document.getElementById("auctionDate").value,
+      notes: document.getElementById("notes").value.trim(),
+      updatedAt: new Date().toLocaleString()
+    };
+
+    if (!vehicle.vin && !vehicle.callNumber) {
+      alert("Please enter at least a VIN or Call / Job Number.");
+      return;
+    }
+
+    if (editingId) {
+      vehicles = vehicles.map(v => v.id === editingId ? vehicle : v);
+      editingId = null;
+    } else {
+      vehicles.push(vehicle);
+    }
+
+    localStorage.setItem("valorFleetInventory", JSON.stringify(vehicles));
+    clearForm();
+    renderVehicles();
+  }
+
+  function clearForm() {
+    ["vin", "callNumber", "year", "make", "model", "mileage", "auctionDate", "notes"].forEach(id => {
+      document.getElementById(id).value = "";
+    });
+    document.getElementById("hasKeys").value = "Yes";
+  }
+
+  function renderVehicles() {
+    const list = document.getElementById("vehicleList");
+    const search = document.getElementById("searchBox").value.toLowerCase();
+    const filter = companyFilter.value;
+    const isAdmin = role.value === "admin";
+
+    list.innerHTML = "";
+
+    const filtered = vehicles.filter(v => {
+      const last6 = v.vin ? v.vin.slice(-6).toLowerCase() : "";
+      const searchable = `
+        ${v.vin} ${last6} ${v.callNumber} ${v.year}
+        ${v.make} ${v.model} ${v.ownerCompany}
+        ${v.storedCompany} ${v.storedLocation}
+      `.toLowerCase();
+
+      const matchesSearch = searchable.includes(search);
+      const matchesCompany =
+        activeCompany === "All" ||
+        v.ownerCompany === activeCompany ||
+        v.storedCompany === activeCompany;
+
+      const matchesDropdown =
+        filter === "All" ||
+        v.ownerCompany === filter ||
+        v.storedCompany === filter;
+
+      return matchesSearch && matchesCompany && matchesDropdown;
+    });
+
+    if (filtered.length === 0) {
+      list.innerHTML = `<div class="panel"><p>No vehicles found.</p></div>`;
+      return;
+    }
+
+    filtered.forEach(v => {
+      const card = document.createElement("div");
+      card.className = "vehicle-card";
+
+      const differentCompanyNotice =
+        v.ownerCompany !== v.storedCompany
+          ? `<p><strong style="color:#b91c1c;">Notice:</strong> This vehicle belongs to ${v.ownerCompany} but is stored at ${v.storedCompany}.</p>`
+          : "";
+
+      card.innerHTML = `
+        <h3>${v.year || ""} ${v.make || ""} ${v.model || ""}</h3>
+
+        <span class="badge">VIN: ${v.vin || "N/A"}</span>
+        <span class="badge">Last 6: ${v.vin ? v.vin.slice(-6) : "N/A"}</span>
+        <span class="badge">Call #: ${v.callNumber || "N/A"}</span>
+        <span class="badge">Keys: ${v.hasKeys}</span>
+
+        <p><strong>Mileage:</strong> ${v.mileage || "N/A"}</p>
+        <p><strong>Belongs To:</strong> ${v.ownerCompany}</p>
+        <p><strong>Stored At:</strong> ${v.storedCompany}</p>
+        <p><strong>Location:</strong> ${v.storedLocation}</p>
+        ${differentCompanyNotice}
+        <p><strong>Auction Date:</strong> ${v.auctionDate || "Not set"}</p>
+        <p><strong>Notes:</strong><br>${v.notes || "No notes"}</p>
+        <p><strong>Last Updated:</strong> ${v.updatedAt}</p>
+
+        <div id="qr-${v.id}" class="qr"></div>
+
+        ${
+          isAdmin
+          ? `
+            <button class="small-btn" onclick="editVehicle('${v.id}')">Edit</button>
+            <button class="small-btn danger" onclick="deleteVehicle('${v.id}')">Delete</button>
+          `
+          : `
+            <button class="small-btn" onclick="employeeNote('${v.id}')">Update Notes</button>
+          `
+        }
+      `;
+
+      list.appendChild(card);
+
+      new QRCode(document.getElementById(`qr-${v.id}`), {
+        text: JSON.stringify({
+          program: "Valor Fleet Inventory",
+          vin: v.vin,
+          callNumber: v.callNumber,
+          ownerCompany: v.ownerCompany,
+          storedCompany: v.storedCompany,
+          storedLocation: v.storedLocation
+        }),
+        width: 96,
+        height: 96
+      });
+    });
+  }
+
+  function editVehicle(id) {
+    const v = vehicles.find(vehicle => vehicle.id === id);
+    if (!v) return;
+
+    editingId = id;
+
+    document.getElementById("vin").value = v.vin;
+    document.getElementById("callNumber").value = v.callNumber;
+    document.getElementById("year").value = v.year;
+    document.getElementById("make").value = v.make;
+    document.getElementById("model").value = v.model;
+    document.getElementById("mileage").value = v.mileage;
+    document.getElementById("hasKeys").value = v.hasKeys;
+    ownerCompany.value = v.ownerCompany;
+    storedCompany.value = v.storedCompany;
+    updateLocations();
+    storedLocation.value = v.storedLocation;
+    document.getElementById("auctionDate").value = v.auctionDate;
+    document.getElementById("notes").value = v.notes;
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function deleteVehicle(id) {
+    if (!confirm("Delete this vehicle from inventory?")) return;
+    vehicles = vehicles.filter(v => v.id !== id);
+    localStorage.setItem("valorFleetInventory", JSON.stringify(vehicles));
+    renderVehicles();
+  }
+
+  function employeeNote(id) {
+    const v = vehicles.find(vehicle => vehicle.id === id);
+    const newNote = prompt("Update notes:", v.notes || "");
+    if (newNote === null) return;
+
+    v.notes = newNote;
+    v.updatedAt = new Date().toLocaleString();
+
+    localStorage.setItem("valorFleetInventory", JSON.stringify(vehicles));
+    renderVehicles();
+  }
+
+  function exportInventory() {
+    const data = JSON.stringify(vehicles, null, 2);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "valor-fleet-inventory.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
+  }
+
+  function clearInventory() {
+    if (!confirm("This will delete all saved inventory from this device.")) return;
+    vehicles = [];
+    localStorage.removeItem("valorFleetInventory");
+    renderVehicles();
+  }
+
+  init();
+</script>
+
+</body>
+</html>
